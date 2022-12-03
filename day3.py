@@ -18,6 +18,12 @@ def find_duplicate(compartment1,compartment2):
 
     return 'PROBLEMMMMMM'
 
+def find_badge(elf1,elf2,elf3):
+
+    badge = (set(elf1).intersection(elf2)).intersection(elf3)
+
+    return list(badge)[0]
+
 def get_priority(toy):
 
     ascii = ord(toy)
@@ -29,24 +35,43 @@ def get_priority(toy):
 
     return "PROBLEMMMMMMMMM"
 
+
+################part 1#################
 for line in lines:
 
     stripped_line = line.strip()
-    #print(stripped_line)
+    
     number_of_items = len(stripped_line)
-    #print("number of items :",number_of_items)
+    
     compartment1 = stripped_line[0:int(number_of_items/2)]
-    compartment2 = stripped_line[int(number_of_items/2):]
-
-    #print("first compartment :" ,compartment1)
-    #print("second compartment :",compartment2)
+    compartment2 = stripped_line[int(number_of_items/2):]    
 
     duplicate_item = find_duplicate(compartment1,compartment2)
 
-    priority = get_priority(duplicate_item)
-    #print("duplicate : ",duplicate_item,"priority",priority)
+    priority = get_priority(str(duplicate_item))    
 
     sum_of_priorities = sum_of_priorities + priority
 
-print(sum_of_priorities)
+print("Priorities part 1 : ",sum_of_priorities)
+
+############### part 2
+sum_of_priorities = 0
+
+for index in range(0,len(lines)-2,3):
+
+    line1 = lines[index].strip()
+    line2 = lines[index+1].strip()
+    line3 = lines[index+2].strip()    
+    
+    badge = find_badge(line1,line2,line3)     
+
+    priority = get_priority(str(badge))    
+
+    sum_of_priorities = sum_of_priorities + priority
+
+print("priorities part 2 : ",sum_of_priorities)
+
+
+
+
     
