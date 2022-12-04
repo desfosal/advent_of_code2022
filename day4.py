@@ -9,12 +9,9 @@ def parse_assignment(assignment):
     return assignment_start,assignment_end
 
 def A_contains_B(assignment_A,assignment_B):
-
-    assignment_A_start = int(assignment_A.split('-')[0])
-    assignment_A_end = int(assignment_A.split('-')[1])
-
-    assignment_B_start = int(assignment_B.split('-')[0])
-    assignment_B_end = int(assignment_B.split('-')[1])
+   
+    assignment_A_start,assignment_A_end = parse_assignment(assignment_A)
+    assignment_B_start,assignment_B_end = parse_assignment(assignment_B)
 
     if assignment_B_start >= assignment_A_start and assignment_B_end <= assignment_A_end:
         return True
