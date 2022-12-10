@@ -83,3 +83,25 @@ for dir in all_directory_sizes:
 print("Sum of sizes of directories smaller than threshold : ",sum_of_sizes)
 
 
+############part 2######
+
+total_size = 70000000
+root_size = root_directory.size
+
+unused_space = total_size - root_size
+
+required_space = 30000000
+
+target_size = required_space - unused_space
+print(target_size)
+
+best_dir = 99999999999
+
+for current_dir in all_directory_sizes:
+    if int(current_dir) > target_size and int(current_dir) < best_dir:
+        best_dir = int(current_dir)
+
+print("best directory to delete has size : ",best_dir)
+
+
+
