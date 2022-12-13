@@ -2,7 +2,7 @@ from advent_tools import *
 
 import numpy as np
 
-stripped_lines = read_lines("input_day11.txt")
+stripped_lines = read_lines("input_day11_small.txt")
 
 class Monkey:
 
@@ -50,7 +50,7 @@ class Monkey:
                     else:
                         self.worry_level = self.worry_level * int(self.operation[2])
 
-            self.worry_level = int(np.floor( self.worry_level / 3 ))
+            ##self.worry_level = int(np.floor( self.worry_level / 3 )) #not needed for part 2
             print("Worry level is : ",self.worry_level)
             thrown_items.append(self.worry_level)
 
@@ -102,7 +102,7 @@ for current_line in range(0,len(stripped_lines),lines_per_monkey):
 
 print("number of monkeys : ",len(monkeys))
 
-for round in range(20):
+for round in range(1000):
 
     for monkey in monkeys:
         thrown_items,targets = monkey.take_turn()
