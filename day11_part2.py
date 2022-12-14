@@ -2,11 +2,11 @@ from advent_tools import *
 
 import numpy as np
 
-stripped_lines = read_lines("input_day11_small.txt")
+stripped_lines = read_lines("input_day11.txt")
 
 class Monkey:
 
-    def __init__(self,number,items,operation,divisor,success_target,fail_target):
+    def __init__(self,number,items,operation,divisor,success_target,fail_target,product_of_primes):
 
         self.items = items 
         self.number = number
@@ -14,6 +14,7 @@ class Monkey:
         self.divisor = divisor
         self.success_target = int(success_target)
         self.fail_target = int(fail_target)
+        self.product_of_primes = product_of_primes
 
         self.worry_level = 0
 
@@ -51,8 +52,10 @@ class Monkey:
                         self.worry_level = self.worry_level * int(self.operation[2])
 
             ##self.worry_level = int(np.floor( self.worry_level / 3 )) #not needed for part 2
-            print("Worry level is : ",self.worry_level)
-            thrown_items.append(self.worry_level)
+           # print("Worry level is : ",self.worry_level)
+
+            self.worry_level = self.worry_level % self.product_of_primes
+            thrown_items.append(self.worry_level )
 
             if self.worry_level % int(self.divisor) == 0:
                 targets.append(self.success_target)
@@ -70,6 +73,10 @@ lines_per_monkey = 7
 monkeys = []
 
 current_monkey_number = 0
+
+product_of_primes = 2*3*5*7*11*13*17*19*23
+
+
 
 for current_line in range(0,len(stripped_lines),lines_per_monkey):
 
@@ -94,7 +101,7 @@ for current_line in range(0,len(stripped_lines),lines_per_monkey):
     
     
 
-    monkey = Monkey(current_monkey_number,items,operation,divisor,success_target,fail_target)
+    monkey = Monkey(current_monkey_number,items,operation,divisor,success_target,fail_target,product_of_primes)
     current_monkey_number +=1
     monkeys.append(monkey)
 
@@ -102,21 +109,23 @@ for current_line in range(0,len(stripped_lines),lines_per_monkey):
 
 print("number of monkeys : ",len(monkeys))
 
-for round in range(1000):
 
+#product_of_primes = 13*17*29*23
+for round in range(10000):
+
+    #print("current round : ",round)
     for monkey in monkeys:
         thrown_items,targets = monkey.take_turn()
         monkey.clear_items()
 
         for item_index in range(len(thrown_items)):
-            monkeys[targets[item_index]].add_item(thrown_items[item_index]) ##rendu ici faut coder add_item
+            monkeys[targets[item_index]].add_item(thrown_items[item_index]) 
 
-for monkey in monkeys:
-    print("Monkey number : ",monkey.number, " Monkey items : ",monkey.items)
+    
 
 inspections = []
 for monkey in monkeys:
-    print("Monkey number : ",monkey.number, " Monkey inspections : ",monkey.inspections)
+    #print("Monkey number : ",monkey.number, " Monkey inspections : ",monkey.inspections)
     inspections.append(monkey.inspections)
 
 inspections.sort()
